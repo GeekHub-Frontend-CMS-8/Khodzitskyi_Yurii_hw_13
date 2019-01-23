@@ -4,9 +4,8 @@
         let mainArray = [];
         let secondArr = [];
         let lastLoadedIdFromServer = 0;
-        let parseLocal = JSON.parse(localStorage.getItem('localStorageArray'));
-        if (parseLocal != null) {
-            mainArray = parseLocal;
+        if (JSON.parse(localStorage.getItem('localStorageArray')) != null) {
+            mainArray = JSON.parse(localStorage.getItem('localStorageArray'));
         }
         //let todoList = $('#todoList');
         renderArray(todoList);
@@ -19,28 +18,28 @@
             for (i = 0; i < mainArray.length; i++) {
                 let itemsCheckbox = '<input type="checkbox" id="todoListCheckboxItem' + i + '"" class="todoListCheckboxItem">';
                 let itemsText = '<span>' + mainArray[i].title + '</span>';
-                //let editBtn = '<button class="editBtn">'+ 'edit' +'</button>';   <a href="#ex1" rel="modal:open">Open Modal</a>
-                let editBtn = '<a href="#ex1" rel="modal:open" class="editBtn">Edit</a>';
-                let rmBtn = '<button class="rmBtn">' + '\u00D7' + '</button>';
-                let cleafixDiv ='<div class="clearfix"></div>' ;
                 //check for completed tasks
                 if (mainArray[i].completed === true) {
-                    let liItemPos = 'li' + i;
-                    let checkboxId = 'todoListCheckboxItem' + i;
                     itemsText = '<span style="text-decoration: line-through;color: #b3b3b3">' + mainArray[i].title + '</span>';
                     itemsCheckbox = '<input type="checkbox" id="todoListCheckboxItem' + i + '"" class="todoListCheckboxItem" checked="checked">';
                 }
-                //create template for appending to the html
-                let template = '<li id="li' + i +'">'+itemsCheckbox + itemsText + editBtn + rmBtn + cleafixDiv +'</li>';
-                $('#todoList').append(template)
+                //appending item to the html
+                $('#todoList').append(
+                    '<li id="li' + i +'">'+
+                    itemsCheckbox +
+                    itemsText +
+                    '<a href="#ex1" rel="modal:open" class="editBtn">Edit</a>' +
+                    '<button class="rmBtn">' + '\u00D7' + '</button>' +
+                    '<div class="clearfix"></div>' +
+                    '</li>'
+                )
             }
             //add new item from text input
             $('#addButton').on('click',function getInputText() {
-                let text = $('#inputText').val();
-                if (text != '') {
+                if ($('#inputText').val() != '') {
                     mainArray.push({
                         "id": mainArray.length,
-                        "title": text,
+                        "title": $('#inputText').val(),
                         "completed": false
                     });
                 }
@@ -52,17 +51,13 @@
             });
             //delete element button
             $('.rmBtn').on('click',function (e) {
-                let li = e.target.parentElement.id;
-                let elem = parseInt(li.substr(2));
-                mainArray.splice(elem,1);
+                mainArray.splice(parseInt(e.target.parentElement.id.substr(2)),1);
                 pushToLocalStorage();
                 renderArray(todoList);
             });
             $('.editBtn').on('click',function (e) {
-                let li = e.target.parentElement.id;
-                let elem = parseInt(li.substr(2));
-                getPosOfLi = elem;
-                $('#modalEditInput').val(mainArray[elem].title);
+                getPosOfLi = parseInt(e.target.parentElement.id.substr(2));
+                $('#modalEditInput').val(mainArray[parseInt(e.target.parentElement.id.substr(2))].title);
                 renderArray(todoList);
             });
             //clear array and local storage
@@ -73,13 +68,11 @@
             });
             //get parent id and set parameter "completed"
             $('.todoListCheckboxItem').on('click',function (e) {
-                let li = e.target.parentElement.id;
-                let elem = parseInt(li.substr(2));
                 if (e.target.checked === true) {
-                    mainArray[elem].completed = true;
+                    mainArray[parseInt(e.target.parentElement.id.substr(2))].completed = true;
                 }
                 else {
-                    mainArray[elem].completed = false;
+                    mainArray[parseInt(e.target.parentElement.id.substr(2))].completed = false;
                 }
                 pushToLocalStorage();
                 renderArray(todoList);
