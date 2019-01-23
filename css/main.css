@@ -1,3 +1,8 @@
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
 .main-wrapper {
 
     display: flex;
@@ -47,4 +52,9 @@
     max-width: 500px;
     min-height: 50px;
     resize: vertical;
+}
+.todoForm button, input {
+    background-color: #292929;
+    color: aliceblue;
+    padding: 5px 15px;
 }

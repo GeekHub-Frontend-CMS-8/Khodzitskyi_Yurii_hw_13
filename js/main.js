@@ -22,6 +22,7 @@
                 //let editBtn = '<button class="editBtn">'+ 'edit' +'</button>';   <a href="#ex1" rel="modal:open">Open Modal</a>
                 let editBtn = '<a href="#ex1" rel="modal:open" class="editBtn">Edit</a>';
                 let rmBtn = '<button class="rmBtn">' + '\u00D7' + '</button>';
+                let cleafixDiv ='<div class="clearfix"></div>' ;
                 //check for completed tasks
                 if (mainArray[i].completed === true) {
                     let liItemPos = 'li' + i;
@@ -30,7 +31,7 @@
                     itemsCheckbox = '<input type="checkbox" id="todoListCheckboxItem' + i + '"" class="todoListCheckboxItem" checked="checked">';
                 }
                 //create template for appending to the html
-                let template = '<li id="li' + i +'">'+itemsCheckbox + itemsText + editBtn + rmBtn + '</li>';
+                let template = '<li id="li' + i +'">'+itemsCheckbox + itemsText + editBtn + rmBtn + cleafixDiv +'</li>';
                 $('#todoList').append(template)
             }
             //add new item from text input
