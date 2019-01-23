@@ -26,7 +26,7 @@
                 if (mainArray[i].completed === true) {
                     let liItemPos = 'li' + i;
                     let checkboxId = 'todoListCheckboxItem' + i;
-                    itemsText = '<span style="text-decoration: line-through">' + mainArray[i].title + '</span>';
+                    itemsText = '<span style="text-decoration: line-through;color: #b3b3b3">' + mainArray[i].title + '</span>';
                     itemsCheckbox = '<input type="checkbox" id="todoListCheckboxItem' + i + '"" class="todoListCheckboxItem" checked="checked">';
                 }
                 //create template for appending to the html
@@ -86,7 +86,7 @@
         }
         //download more tasks from server
         $('#loadMoreTodos').on('click',function () {
-            let loadFromServerLenght = lastLoadedIdFromServer + 10;
+            let loadFromServerLenght = lastLoadedIdFromServer + 5;
                 $.getJSON('https://jsonplaceholder.typicode.com/todos', function(data) {
                     secondArr = data;
                 });
