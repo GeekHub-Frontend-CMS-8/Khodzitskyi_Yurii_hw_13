@@ -12,6 +12,18 @@
         }
         let todoList = document.getElementById('todoList');
         renderArray(todoList);
+        let secondArr = getArrayFromServer();
+        function getArrayFromServer() {
+            let sec = [];
+            $.getJSON('https://jsonplaceholder.typicode.com/todos', function(data) {
+                sec = data;
+            });
+            return sec;
+        };
+        console.log(secondArr);
+        $.getJSON('https://jsonplaceholder.typicode.com/todos', function(data) {
+            secondArr = data;
+        });
         //add element button
         $('#addButton').on('click',function getInputText() {
             let text = document.getElementById('inputText').value;
@@ -61,23 +73,8 @@
             //clear array and local storage
             $('#clearArrayStorage').click(function () {
                 localStorage.clear();
-                document.getElementById('todoList').innerHTML = '';
+                $('#todoList').empty();
                 mainArray = [];
-            });
-            $('#loadMoreTodos').click(function () {
-                let secondArr = [];
-                renderArray(todoList);
-                $(function(){
-                    $.getJSON('https://jsonplaceholder.typicode.com/todos', function(data) {
-                        secondArr = data;
-                        secondArr.splice(10, 190);
-                        for (i = 0; i <10; i++) {
-                            mainArray[mainArray.length] = secondArr[i];
-                        }
-                        pushToLocalStorage();
-                        renderArray(todoList);
-                    });
-                });
             });
             //get parent id and set parameter "completed"
             $('.todoListCheckboxItem').click(function (e) {
@@ -93,6 +90,13 @@
                 renderArray(todoList);
             });
         }
+        $('#loadMoreTodos').click(function () {
+            for (let i = 0; i <= 9; i++) {
+                mainArray.push(secondArr[i]);
+                pushToLocalStorage();
+                renderArray(todoList);
+            }
+        });
         function pushToLocalStorage() {
             localStorage.setItem('localStorageArray', JSON.stringify(mainArray));
         }
