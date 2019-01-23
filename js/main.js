@@ -1,5 +1,6 @@
 
     $(document).ready(function () {
+        let getPosOfLi = 0;
         let mainArray = [];
         let secondArr = [];
         let lastLoadedIdFromServer = 0;
@@ -19,7 +20,7 @@
                 let itemsCheckbox = '<input type="checkbox" id="todoListCheckboxItem' + i + '"" class="todoListCheckboxItem">';
                 let itemsText = '<span>' + mainArray[i].title + '</span>';
                 //let editBtn = '<button class="editBtn">'+ 'edit' +'</button>';   <a href="#ex1" rel="modal:open">Open Modal</a>
-                let editBtn = '<button class="editBtn">'+ 'edit' +'</button>';
+                let editBtn = '<a href="#ex1" rel="modal:open" class="editBtn">Edit</a>';
                 let rmBtn = '<button class="rmBtn">' + '\u00D7' + '</button>';
                 //check for completed tasks
                 if (mainArray[i].completed === true) {
@@ -59,7 +60,8 @@
             $('.editBtn').on('click',function (e) {
                 let li = e.target.parentElement.id;
                 let elem = parseInt(li.substr(2));
-                $('#inputText').val(mainArray[elem].title);
+                getPosOfLi = elem;
+                $('#modalEditInput').val(mainArray[elem].title);
                 renderArray(todoList);
             });
             //clear array and local storage
@@ -96,6 +98,12 @@
                 pushToLocalStorage();
                 renderArray(todoList);
             }
+        });
+        $('#modalSaveBtn').on('click', function () {
+            mainArray[getPosOfLi].title = $('#modalEditInput').val();
+            $('#modalEditInput').empty();
+            pushToLocalStorage();
+            renderArray(todoList);
         });
         function pushToLocalStorage() {
             localStorage.setItem('localStorageArray', JSON.stringify(mainArray));

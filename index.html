@@ -16,12 +16,15 @@
     <button id="loadMoreTodos"> LoadMore </button>
 </form>
 <div id="ex1" class="modal">
-    <p>Thanks for clicking. That felt good.</p>
-    <a href="#" rel="modal:close">Close</a>
+    <textarea id="modalEditInput"></textarea>
+    <!--<a href="#" rel="modal:close">Close</a>-->
+    <a href="#" rel="modal:close" id="modalSaveBtn">
+        Save Changes
+    </a>
 </div>
 
 <!-- Link to open the modal -->
-<p><a href="#ex1" rel="modal:open">Open Modal</a></p>
+<!--<p><a href="#ex1" rel="modal:open">Open Modal</a></p>-->
 <ul id="todoList"></ul>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
