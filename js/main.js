@@ -84,6 +84,7 @@
                 renderArray(todoList);
             });
         }
+        //download more tasks from server
         $('#loadMoreTodos').on('click',function () {
             let loadFromServerLenght = lastLoadedIdFromServer + 10;
                 $.getJSON('https://jsonplaceholder.typicode.com/todos', function(data) {
@@ -99,6 +100,7 @@
                 renderArray(todoList);
             }
         });
+        //save button in modal window on edit
         $('#modalSaveBtn').on('click', function () {
             mainArray[getPosOfLi].title = $('#modalEditInput').val();
             $('#modalEditInput').empty();
