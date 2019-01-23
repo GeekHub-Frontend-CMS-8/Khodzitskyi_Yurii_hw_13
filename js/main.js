@@ -1,6 +1,7 @@
 
     $(document).ready(function () {
         let mainArray = [];
+        let secondArr = [];
         let parseLocal = JSON.parse(localStorage.getItem('localStorageArray'));
             // {
             //     "id": 0,
@@ -12,15 +13,6 @@
         }
         let todoList = document.getElementById('todoList');
         renderArray(todoList);
-        let secondArr = getArrayFromServer();
-        function getArrayFromServer() {
-            let sec = [];
-            $.getJSON('https://jsonplaceholder.typicode.com/todos', function(data) {
-                sec = data;
-            });
-            return sec;
-        };
-        console.log(secondArr);
         $.getJSON('https://jsonplaceholder.typicode.com/todos', function(data) {
             secondArr = data;
         });
@@ -91,6 +83,9 @@
             });
         }
         $('#loadMoreTodos').click(function () {
+                $.getJSON('https://jsonplaceholder.typicode.com/todos', function(data) {
+                    secondArr = data;
+                });
             for (let i = 0; i <= 9; i++) {
                 mainArray.push(secondArr[i]);
                 pushToLocalStorage();
