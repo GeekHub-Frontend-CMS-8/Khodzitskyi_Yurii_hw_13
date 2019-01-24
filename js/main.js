@@ -7,7 +7,6 @@
         if (JSON.parse(localStorage.getItem('localStorageArray')) != null) {
             mainArray = JSON.parse(localStorage.getItem('localStorageArray'));
         }
-        //let todoList = $('#todoList');
         renderArray(todoList);
         $.getJSON('https://jsonplaceholder.typicode.com/todos', function(data) {
             secondArr = data;
@@ -55,6 +54,7 @@
                 pushToLocalStorage();
                 renderArray(todoList);
             });
+            //edit element button
             $('.editBtn').on('click',function (e) {
                 getPosOfLi = parseInt(e.target.parentElement.id.substr(2));
                 $('#modalEditInput').val(mainArray[parseInt(e.target.parentElement.id.substr(2))].title);
@@ -65,6 +65,15 @@
                 localStorage.clear();
                 $('#todoList').empty();
                 mainArray = [];
+            });
+            $('#clearCompleted').on('click',function () {
+                for (i = 0; i < mainArray.length; i++) {
+                    if (mainArray[i].completed === true) {
+                        mainArray.splice(i, 1)
+                    }
+                }
+                pushToLocalStorage();
+                renderArray(todoList);
             });
             //get parent id and set parameter "completed"
             $('.todoListCheckboxItem').on('click',function (e) {
